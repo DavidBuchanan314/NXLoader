@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">NXLoader</string>
+    <string name="about">\nNXLoader is an exploit implementation for \"the\" Tegra X1
+        bootrom vulnerability. It is based on the fusée gelée exploit by ktemkin, and the ShofEL2 exploit by fail0verflow,
+        just ported to the Android platform.
+        \n\n
+        Connect your Switch and put it in RCM mode to start pwning.
+    </string>
 </resources>

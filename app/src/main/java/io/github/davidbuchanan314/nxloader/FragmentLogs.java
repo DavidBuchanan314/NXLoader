@@ -1,10 +1,12 @@
 package io.github.davidbuchanan314.nxloader;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.*;
 import android.widget.TextView;
+import android.preference.PreferenceManager;
 
 
 public class FragmentLogs extends Fragment {

@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">NXLoader</string>
+    <string name="preference_payload_name">io.github.davidbuchanan314.PREFERENCE_PAYLOAD_NAME</string>
+    <string name="sel_primary_payload">Select Primary Payload</string>
+    <string name="reset_primary">Restore Default Primary Payload (fusee.bin)</string>
     <string name="about">\nNXLoader is an exploit implementation for \"the\" Tegra X1
         bootrom vulnerability. It is based on the fusée gelée exploit by ktemkin, and the ShofEL2 exploit by fail0verflow,
         just ported to the Android platform.

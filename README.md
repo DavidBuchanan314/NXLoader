@@ -3,7 +3,7 @@
 # NXLoader
 My first Android app: Launch Fusée Gelée payloads from stock Android
 
-Heavily based on [Fusée Gelée](https://github.com/reswitched/fusee-launcher/) and [ShofEL2](https://github.com/fail0verflow/shofel2). [fusee.bin](https://github.com/Atmosphere-NX/Atmosphere/tree/master/fusee) is bundled as a default payload
+Heavily based on [Fusée Gelée](https://github.com/reswitched/fusee-launcher/) and [ShofEL2](https://github.com/fail0verflow/shofel2). [fusee.bin](https://github.com/ktemkin/Atmosphere/tree/poc_nvidia/fusee) is bundled as a default payload
 
 ## Does it work on your device? [Report here](https://github.com/DavidBuchanan314/NXLoader/issues/1)
 ## [Get the APK release](https://github.com/DavidBuchanan314/NXLoader/releases/tag/alpha-0.1)

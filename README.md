@@ -22,6 +22,7 @@ is some rather disgusting code (Potentially blocking tasks on the UI thread 🤢
 Note: The app does not need to be running in order to launch the payload. The phone can even be locked!
 
 ## FAQ:
+- Why use this over a web-based launcher?: No internet required, and can auto-launch even if your phone is locked. Plug and play!
 - Can it load Linux?: soon™
 - Will it brick my phone/switch?: Hopefully not, but I an certainly not responsible if it does!
 - Does it need root?: Nope!

@@ -48,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(myReceiver, new IntentFilter("io.github.davidbuchanan314.LOG_UPDATE"));
     }
 
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(myReceiver);
+        super.onDestroy();
+    }
+
     // primary payload selection button
     public void primarySelect(View view) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

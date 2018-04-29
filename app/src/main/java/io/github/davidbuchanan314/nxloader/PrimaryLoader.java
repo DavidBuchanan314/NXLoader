@@ -12,6 +12,7 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,18 +26,6 @@ public class PrimaryLoader implements USBDevHandler {
     private static final int INTERMEZZO_LOCATION     = 0x4001F000;
     private static final int PAYLOAD_LOAD_BLOCK      = 0x40020000;
     private static final int MAX_LENGTH              = 0x30298;
-
-    // Java treats bytes >0x7F as ints :(
-    private static final byte[] intermezzo = {
-            0x44, 0x00, (byte)0x9f, (byte)0xe5, 0x01, 0x11, (byte)0xa0, (byte)0xe3, 0x40, 0x20, (byte)0x9f, (byte)0xe5,
-            0x00, 0x20, 0x42, (byte)0xe0, 0x08, 0x00, 0x00, (byte)0xeb, 0x01, 0x01, (byte)0xa0, (byte)0xe3,
-            0x10, (byte)0xff, 0x2f, (byte)0xe1, 0x00, 0x00, (byte)0xa0, (byte)0xe1, 0x2c, 0x00, (byte)0x9f, (byte)0xe5,
-            0x2c, 0x10, (byte)0x9f, (byte)0xe5, 0x02, 0x28, (byte)0xa0, (byte)0xe3, 0x01, 0x00, 0x00, (byte)0xeb,
-            0x20, 0x00, (byte)0x9f, (byte)0xe5, 0x10, (byte)0xff, 0x2f, (byte)0xe1, 0x04, 0x30, (byte)0x90, (byte)0xe4,
-            0x04, 0x30, (byte)0x81, (byte)0xe4, 0x04, 0x20, 0x52, (byte)0xe2, (byte)0xfb, (byte)0xff, (byte)0xff, 0x1a,
-            0x1e, (byte)0xff, 0x2f, (byte)0xe1, 0x20, (byte)0xf0, 0x01, 0x40, 0x5c, (byte)0xf0, 0x01, 0x40,
-            0x00, 0x00, 0x02, 0x40, 0x00, 0x00, 0x01, 0x40
-    };
 
     // Used to load the 'native-lib' library on startup.
     static {
@@ -75,6 +64,16 @@ public class PrimaryLoader implements USBDevHandler {
             payload.putInt(INTERMEZZO_LOCATION);
         }
 
+        byte[] intermezzo;
+        try {
+            InputStream intermezzoStream = ctx.getAssets().open("intermezzo.bin");
+            intermezzo = new byte[intermezzoStream.available()];
+            intermezzoStream.read(intermezzo);
+            intermezzoStream.close();
+        } catch (IOException e) {
+            Logger.log(ctx, "[-] Failed to read intermezzo: " + e.toString());
+            return;
+        }
         payload.put(intermezzo);
 
         // pad until payload
@@ -137,13 +136,14 @@ public class PrimaryLoader implements USBDevHandler {
         InputStream payload_file;
         if (payload_name == null) {
             Logger.log(ctx, "[*] Opening default payload (fusee.bin)");
-            payload_file = ctx.getResources().openRawResource(R.raw.fusee);
+            payload_file = ctx.getAssets().open("fusee.bin");
         } else {
             Logger.log(ctx, "[*] Opening custom payload (" + payload_name + ")");
             payload_file = new FileInputStream(ctx.getFilesDir().getPath() + "/payload.bin");
         }
         byte[] payload_data = new byte[payload_file.available()];
         Logger.log(ctx, "[+] Read " + Integer.toString(payload_file.read(payload_data)) + " bytes from payload file");
+        payload_file.close();
         return payload_data;
     }
 

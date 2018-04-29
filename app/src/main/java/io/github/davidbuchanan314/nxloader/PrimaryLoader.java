@@ -11,13 +11,14 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
-import android.preference.PreferenceManager;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class PrimaryLoader implements USBDevHandler {
     private static final int RCM_PAYLOAD_ADDR        = 0x40010000;
@@ -131,7 +132,7 @@ public class PrimaryLoader implements USBDevHandler {
     }
 
     private byte[] getPayload(Context ctx) throws IOException {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        SharedPreferences prefs = ctx.getSharedPreferences("config", MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
         String payload_name = prefs.getString(ctx.getString(R.string.preference_payload_name), null);
         InputStream payload_file;
         if (payload_name == null) {

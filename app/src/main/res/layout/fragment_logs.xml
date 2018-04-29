@@ -7,10 +7,17 @@
     android:paddingRight="16dp"
     android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:typeface="monospace"
-        android:id="@+id/log_text"/>
+        android:scrollbars="vertical"
+        android:fillViewport="true">
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:typeface="monospace"
+            android:layout_weight="1.0"
+            android:id="@+id/log_text"/>
+    </ScrollView>
 </LinearLayout>

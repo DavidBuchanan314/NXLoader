@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.support.v4.view.*;
 import android.support.v4.app.*;
 import android.support.v7.app.AppCompatActivity;
@@ -59,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
     // primary payload reset button
     public void primaryReset(View view) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = getSharedPreferences("config", MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(getString(R.string.preference_payload_name), null);
-        editor.apply();
+        editor.remove(getString(R.string.preference_payload_name));
+        editor.commit();
         Logger.log(this, "[*] Payload reset to default (fusee.bin)");
     }
 
@@ -77,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
                 Utils.copyFile(inputStream, new File(getFilesDir().getPath() + "/payload.bin"));
 
                 String file_name = Utils.getFileName(this, uri);
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences prefs = getSharedPreferences("config", MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(getString(R.string.preference_payload_name), file_name);
-                editor.apply();
+                editor.commit();
 
                 Logger.log(this, "[*] New payload file selected: " + file_name);
             } catch (IOException e) {

@@ -1,6 +1,6 @@
 ![logo](https://i.imgur.com/o335KYo.png "logo")
 
-# NXLoader
+# NXLoader [ALPHA - EXPERIMENTAL]
 My first Android app: Launch Fusée Gelée payloads from stock Android
 
 Heavily based on [Fusée Gelée](https://github.com/reswitched/fusee-launcher/) and [ShofEL2](https://github.com/fail0verflow/shofel2). [fusee.bin](https://github.com/ktemkin/Atmosphere/tree/poc_nvidia/fusee) is bundled as a default payload

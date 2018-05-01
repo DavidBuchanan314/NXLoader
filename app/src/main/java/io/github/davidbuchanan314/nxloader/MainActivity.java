@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Service;
@@ -66,15 +67,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // primary payload reset button
+    @SuppressLint("ApplySharedPref")
     public void primaryReset(View view) {
         SharedPreferences prefs = getSharedPreferences("config", Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(PREFERENCE_PAYLOAD_NAME);
-        editor.apply();
+        editor.commit();
         Logger.log(this, getString(R.string.log_payload_reset));
     }
 
     // After payload selected
+    @SuppressLint("ApplySharedPref")
     @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences prefs = getSharedPreferences("config", Context.MODE_MULTI_PROCESS);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(PREFERENCE_PAYLOAD_NAME, file_name);
-                editor.apply();
+                editor.commit();
 
                 Logger.log(this, getString(R.string.log_payload_selected, file_name));
             } catch (IOException e) {
@@ -152,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             // switch to foreground
             if (!(ctx instanceof MainActivity)) {
                 ActivityManager activityManager = (ActivityManager) ctx.getSystemService(Service.ACTIVITY_SERVICE);
-                
+
                 if (activityManager != null)
                     activityManager.moveTaskToFront(getTaskId(), 0);
             }

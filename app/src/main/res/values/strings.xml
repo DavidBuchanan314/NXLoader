@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">NXLoader</string>
-    <string name="preference_payload_name">io.github.davidbuchanan314.PREFERENCE_PAYLOAD_NAME</string>
     <string name="sel_primary_payload">Select Primary Payload</string>
     <string name="reset_primary">Restore Default Primary Payload (fusee.bin)</string>
     <string name="about"><![CDATA[<br>NXLoader is an exploit implementation for "the" Tegra X1
@@ -15,4 +14,30 @@
     </string>
     <string name="lenny" translatable="false">( ͡° ͜ʖ ͡°)</string>
     <string name="rosalina" translatable="false">(∩ ͡° ͜ʖ ͡°)⊃━☆ﾟ</string>
+    <string name="log_app_started">\n[*] App started\n</string>
+    <string name="tab_logs">Logs</string>
+    <string name="tag_config">Config</string>
+    <string name="tab_about">About</string>
+    <string name="log_payload_reset">[*] Payload reset to default (fusee.bin)</string>
+    <string name="log_payload_selected">[*] New payload file selected: %1$s</string>
+    <string name="log_payload_select_fail">[-] Failed to set new payload: %1$s</string>
+    <string name="log_launching_primary_payload">[+] Launching primary payload!!!</string>
+    <string name="log_failed_to_read_device_id">[-] Failed to read device ID, bailing out :(</string>
+    <string name="log_read_device_id">[+] Read device ID: %1$s</string>
+    <string name="log_failed_to_read_intermezzo">[-] Failed to read intermezzo: %1$s</string>
+    <string name="log_failed_to_read_payload">[-] Failed to read payload: %1$s</string>
+    <string name="log_sending_payload_failed">[-] Sending payload failed at offset %1$d</string>
+    <string name="log_sent_bytes">[+] Sent %1$d bytes</string>
+    <string name="log_exploit_triggered">[+] Exploit triggered!</string>
+    <string name="log_submiturb_failed">[-] SUBMITURB failed :(</string>
+    <string name="log_discardurb_failed">[-] DISCARDURB failed :(</string>
+    <string name="log_reapurb_failed">[-] REAPURB failed :(</string>
+    <string name="log_wrong_urb_reaped">[-] Wrong URB reaped :( Maybe that doesn\'t matter?</string>
+    <string name="log_how_did_you_get_here">[-] How did you get here!?</string>
+    <string name="log_opening_default_payload">[*] Opening default payload (fusee.bin)</string>
+    <string name="log_opening_custom_payload">[*] Opening custom payload (%1$s)</string>
+    <string name="log_read_bytes_from_payload">[+] Read %1$d bytes from payload file</string>
+    <string name="log_usb_device_connected">[*] USB device connected: %1$s</string>
+    <string name="log_done_talking">[*] Done talking to device: %1$s</string>
+    <string name="log_failed_to_attach_usb_manager">[-] Failed to attach to the USB Manager</string>
 </resources>

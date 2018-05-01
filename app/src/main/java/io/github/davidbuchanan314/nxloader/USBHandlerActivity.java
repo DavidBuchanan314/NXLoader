@@ -42,7 +42,7 @@ public class USBHandlerActivity extends Activity {
                 int pid = device.getProductId();
                 USBDevHandler handler = null;
 
-                Logger.log(this.activityWeakReference.get(), "[*] USB device connected: " + device.getDeviceName());
+                Logger.log(this.activityWeakReference.get(), activityWeakReference.get().getString(R.string.log_usb_device_connected, device.getDeviceName()));
 
                 if (vid == APX_VID && pid == APX_PID) {
                     handler = new PrimaryLoader();
@@ -54,7 +54,7 @@ public class USBHandlerActivity extends Activity {
                 if (handler != null)
                     handler.handleDevice(this.activityWeakReference.get() ,device);
 
-                Logger.log(this.activityWeakReference.get(), "[*] Done talking to device: " + device.getDeviceName());
+                Logger.log(this.activityWeakReference.get(), activityWeakReference.get().getString(R.string.log_done_talking, device.getDeviceName()));
             }
             return null;
         }

@@ -12,6 +12,7 @@ This app is currently in "Alpha" state, it's my first Android app and there
 is some rather disgusting code (Potentially blocking tasks on the UI thread 🤢). This will be improved soon™.
 
 ## HOWTO:
+- (Only needed for some devices) Make sure that OTG is enabled in Android Settings
 - Launch the app.
 - (Optional) go to the Config tab, and select a custom payload file.
 - Plug in your Switch. (On my Nexus 5, I use a micro USB OTG cable, and an A-to-C cable)

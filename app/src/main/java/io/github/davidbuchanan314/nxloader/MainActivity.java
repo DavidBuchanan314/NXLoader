@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Service;
@@ -24,6 +25,9 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 42;
     private FragmentLogs logFragment;
+
+    public static final String PREFERENCE_PAYLOAD_NAME = "io.github.davidbuchanan314.PREFERENCE_PAYLOAD_NAME";
+
     BroadcastReceiver myReceiver;
 
     @Override
@@ -36,16 +40,16 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         logFragment = new FragmentLogs();
-        adapter.addFragment(logFragment, "Logs");
-        adapter.addFragment(new FragmentConfig(), "Config");
-        adapter.addFragment(new FragmentAbout(), "About");
+        adapter.addFragment(logFragment, getString(R.string.tab_logs));
+        adapter.addFragment(new FragmentConfig(), getString(R.string.tag_config));
+        adapter.addFragment(new FragmentAbout(), getString(R.string.tab_about));
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         myReceiver = new ReceiveMessages();
-        registerReceiver(myReceiver, new IntentFilter("io.github.davidbuchanan314.LOG_UPDATE"));
+        registerReceiver(myReceiver, new IntentFilter(Logger.ACTION_LOG_UPDATE));
     }
 
     @Override
@@ -63,34 +67,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // primary payload reset button
+    @SuppressLint("ApplySharedPref")
     public void primaryReset(View view) {
-        SharedPreferences prefs = getSharedPreferences("config", MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+        SharedPreferences prefs = getSharedPreferences("config", Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(getString(R.string.preference_payload_name));
+        editor.remove(PREFERENCE_PAYLOAD_NAME);
         editor.commit();
-        Logger.log(this, "[*] Payload reset to default (fusee.bin)");
+        Logger.log(this, getString(R.string.log_payload_reset));
     }
 
     // After payload selected
+    @SuppressLint("ApplySharedPref")
     @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
-        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK && resultData != null) {
+        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK && resultData != null && resultData.getData() != null) {
             Uri uri = resultData.getData();
             try {
                 InputStream inputStream = getContentResolver().openInputStream(uri);
+
+                if (inputStream == null){
+                    Logger.log(this, getString(R.string.log_payload_select_fail, "unable to open stream"));
+                    return;
+                }
+
                 Utils.copyFile(inputStream, new File(getFilesDir().getPath() + "/payload.bin"));
 
                 String file_name = Utils.getFileName(this, uri);
-                SharedPreferences prefs = getSharedPreferences("config", MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+                SharedPreferences prefs = getSharedPreferences("config", Context.MODE_MULTI_PROCESS);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(getString(R.string.preference_payload_name), file_name);
+                editor.putString(PREFERENCE_PAYLOAD_NAME, file_name);
                 editor.commit();
 
-                Logger.log(this, "[*] New payload file selected: " + file_name);
+                Logger.log(this, getString(R.string.log_payload_selected, file_name));
             } catch (IOException e) {
-                Logger.log(this, "[-] Failed to set new payload: " + e.toString());
-                return;
+                Logger.log(this, getString(R.string.log_payload_select_fail, e.toString()));
             }
         }
     }
@@ -103,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -117,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
@@ -133,13 +144,20 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context ctx, Intent intent) {
             Bundle bundle = intent.getExtras();
+
+            if (bundle == null) {
+                return;
+            }
+
             String msg = bundle.getString("msg");
             logFragment.appendLog(msg);
 
             // switch to foreground
             if (!(ctx instanceof MainActivity)) {
                 ActivityManager activityManager = (ActivityManager) ctx.getSystemService(Service.ACTIVITY_SERVICE);
-                activityManager.moveTaskToFront(getTaskId(), 0);
+
+                if (activityManager != null)
+                    activityManager.moveTaskToFront(getTaskId(), 0);
             }
 
         }

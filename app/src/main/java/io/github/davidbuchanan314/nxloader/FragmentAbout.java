@@ -1,11 +1,11 @@
 package io.github.davidbuchanan314.nxloader;
 
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class FragmentAbout extends Fragment {
@@ -19,19 +19,14 @@ public class FragmentAbout extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
 
-        TextView aboutText = view.findViewById(R.id.about_text);
-        String aboutHtml = getString(R.string.about);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            aboutText.setText(Html.fromHtml(aboutHtml, Html.FROM_HTML_MODE_LEGACY));
-        } else {
-            aboutText.setText(Html.fromHtml(aboutHtml));
-        }
-        aboutText.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView aboutLinksGithub = view.findViewById(R.id.about_links_github);
+        TextView aboutLinksTwitter = view.findViewById(R.id.about_links_twitter);
+
+        aboutLinksGithub.setOnClickListener(view1 -> Utils.openBrowser(view.getContext(), Constants.LINK_GITHUB));
+        aboutLinksTwitter.setOnClickListener(view1 -> Utils.openBrowser(view.getContext(), Constants.LINK_TWITTER));
 
         return view;
     }

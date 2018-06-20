@@ -1,16 +1,26 @@
 <resources>
-    <string name="app_name">NXLoader</string>
-    <string name="preference_payload_name">io.github.davidbuchanan314.PREFERENCE_PAYLOAD_NAME</string>
-    <string name="sel_primary_payload">Select Primary Payload</string>
-    <string name="reset_primary">Restore Default Primary Payload (fusee.bin)</string>
-    <string name="about"><![CDATA[<br>NXLoader is an exploit implementation for "the" Tegra X1
-        bootrom vulnerability. It is based on the fusée gelée exploit by ktemkin, and the ShofEL2 exploit by fail0verflow,
-        just ported to the Android platform.
-        <br><br>
-        Connect your Switch and put it in RCM mode to start pwning.
-        <br><br>
-        <a href="https://github.com/DavidBuchanan314/NXLoader">https://github.com/DavidBuchanan314/NXLoader</a>
-        <br><br>
-        Twitter: <a href="https://twitter.com/david3141593">@David3141593</a>]]>
-    </string>
+    <string name="app_name" translatable="false">NXLoader</string>
+
+    <!-- Strings for Logs -->
+    <string name="logs_title">Logs</string>
+    <string name="logs_category_actions">Actions list</string>
+
+    <!-- Strings for Config -->
+    <string name="config_title">Config</string>
+    <string name="config_category_primary_payload">Primary payload</string>
+    <string name="config_category_restore">Restore default</string>
+    <string name="config_primary_payload_description">You can use your own, previously downloaded, payload.</string>
+    <string name="config_primary_payload_button">Select primary payload</string>
+    <string name="config_restore_description">Restore default payload on your Switch - \"fusee.bin\"</string>
+    <string name="config_restore_button">Restore default</string>
+
+    <!-- Strings for About -->
+    <string name="about_title">About</string>
+    <string name="about_category_description">Description</string>
+    <string name="about_category_instructions">Instructions</string>
+    <string name="about_category_links">Links</string>
+    <string name="about_description">NXLoader is an exploit implementation for the Tegra X1 \"bootrom\" vulnerability. It is based on the \"Fusée Gelée\" exploit by ktemkin and the \"ShofEL2\" exploit by fail0verflow.</string>
+    <string name="about_instructions">Connect your Switch and put it in RCM mode to start loading.</string>
+    <string name="about_link_github">Project on GitHub</string>
+    <string name="about_link_twitter">Developer\'s Twitter</string>
 </resources>

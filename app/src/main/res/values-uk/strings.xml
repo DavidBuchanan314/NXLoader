@@ -1,0 +1,24 @@
+<resources>
+    <!-- Strings for Logs -->
+    <string name="logs_title">Логи</string>
+    <string name="logs_category_actions">Список дій</string>
+
+    <!-- Strings for Config -->
+    <string name="config_title">Налаштування</string>
+    <string name="config_category_primary_payload">Основний завантажувач</string>
+    <string name="config_category_restore">Скидання налаштувань</string>
+    <string name="config_primary_payload_description">Ви можете використовувати власний, заздалегідь збережений, завантажувач.</string>
+    <string name="config_primary_payload_button">Обрати власний завантажувач</string>
+    <string name="config_restore_description">Відновити завантажувач за замовчуванням на ваш Switch - \"fusee.bin\"</string>
+    <string name="config_restore_button">Скинути налаштування</string>
+
+    <!-- Strings for About -->
+    <string name="about_title">Про програму</string>
+    <string name="about_category_description">Опис</string>
+    <string name="about_category_instructions">Інструкції</string>
+    <string name="about_category_links">Посилання</string>
+    <string name="about_description">NXLoader це реалізація експлойта для Tegra X1 використовуюча вразливість \"bootrom\". Він заснований на експолйті \"Fusée Gelée\" від ktemkin і експлойті \"ShofEL2\" від fail0verflow.</string>
+    <string name="about_instructions">Підключіть ваш Switch і введіть його в режим RCM для початку завантаження.</string>
+    <string name="about_link_github">Проект на GitHub</string>
+    <string name="about_link_twitter">Twitter розробника</string>
+</resources>

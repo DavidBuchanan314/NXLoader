@@ -1,12 +1,12 @@
 package io.github.davidbuchanan314.nxloader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,9 +15,10 @@ import java.io.OutputStream;
 public class Utils {
     // https://stackoverflow.com/questions/9655181/how-to-convert-a-byte-array-to-a-hex-string-in-java
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
-        for ( int j = 0; j < bytes.length; j++ ) {
+        for (int j = 0; j < bytes.length; j++) {
             int v = bytes[j] & 0xFF;
             hexChars[j * 2] = hexArray[v >>> 4];
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
@@ -38,7 +39,7 @@ public class Utils {
     }
 
     // https://stackoverflow.com/questions/5568874/how-to-extract-the-file-name-from-uri-returned-from-intent-action-get-content
-    public static String getFileName(Context ctx,  Uri uri) {
+    public static String getFileName(Context ctx, Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {
             Cursor cursor = ctx.getContentResolver().query(uri, null, null, null, null);
@@ -58,5 +59,10 @@ public class Utils {
             }
         }
         return result;
+    }
+
+    public static void openBrowser(Context context, String url) {
+        Uri uri = Uri.parse(url);
+        context.startActivity(new Intent(Intent.ACTION_VIEW, uri));
     }
 }

@@ -5,16 +5,15 @@ import android.content.Intent;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
-import android.os.Parcelable;
 
 // Ideally, this would be a Service, but Services can't handle USB Intents :(
 public class USBHandlerActivity extends Activity {
+
     private static final int APX_VID = 0x0955;
     private static final int APX_PID = 0x7321;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
@@ -35,7 +34,7 @@ public class USBHandlerActivity extends Activity {
             // maybe I'll have some kind of table mapping vid/pid to a handler interface
 
             if (handler != null)
-                handler.handleDevice(this ,device);
+                handler.handleDevice(this, device);
 
             Logger.log(this, "[*] Done talking to device: " + device.getDeviceName());
 

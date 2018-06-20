@@ -4,5 +4,5 @@ import android.content.Context;
 import android.hardware.usb.UsbDevice;
 
 public interface USBDevHandler {
-    void handleDevice(Context ctx, UsbDevice device);
+    void handleDevice(Context context, UsbDevice device);
 }

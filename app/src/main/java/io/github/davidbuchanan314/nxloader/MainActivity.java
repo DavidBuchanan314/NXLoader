@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         editor.remove(Constants.PREFERENCES_KEY);
         editor.apply();
 
+        Toast.makeText(this, R.string.config_toast_restored, Toast.LENGTH_SHORT).show();
         Logger.log(this, "[*] Payload reset to default (fusee.bin)");
     }
 
@@ -91,10 +93,11 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString(Constants.PREFERENCES_KEY, file_name);
                 editor.apply();
 
+                Toast.makeText(this, R.string.config_toast_new_payload, Toast.LENGTH_SHORT).show();
                 Logger.log(this, "[*] New payload file selected: " + file_name);
             } catch (IOException e) {
+                Toast.makeText(this, R.string.config_toast_new_error, Toast.LENGTH_SHORT).show();
                 Logger.log(this, "[-] Failed to set new payload: " + e.toString());
-                return;
             }
         }
     }

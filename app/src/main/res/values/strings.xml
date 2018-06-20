@@ -13,6 +13,9 @@
     <string name="config_primary_payload_button">Select primary payload</string>
     <string name="config_restore_description">Restore default payload on your Switch - \"fusee.bin\"</string>
     <string name="config_restore_button">Restore default</string>
+    <string name="config_toast_restored">Default payload restored.</string>
+    <string name="config_toast_new_payload">New payload selected.</string>
+    <string name="config_toast_new_error">Failed to set new payload.</string>
 
     <!-- Strings for About -->
     <string name="about_title">About</string>

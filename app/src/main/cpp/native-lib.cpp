@@ -17,6 +17,7 @@ Java_io_github_davidbuchanan314_nxloader_PrimaryLoader_nativeTriggerExploit(
 
     int buf_size = sizeof(struct usb_ctrlrequest) + length;
     void *buffer = calloc(1, buf_size);
+    struct usbdevfs_urb *purb;
 
     struct usb_ctrlrequest *ctrl_req = (struct usb_ctrlrequest *) buffer;
     ctrl_req->bRequestType = USB_DIR_IN | USB_RECIP_INTERFACE;
@@ -37,11 +38,12 @@ Java_io_github_davidbuchanan314_nxloader_PrimaryLoader_nativeTriggerExploit(
     if (ioctl(fd, USBDEVFS_DISCARDURB, &urb) < 0)
         return -2;
 
-    if (ioctl(fd, USBDEVFS_REAPURB, &urb) < 0)
+    if (ioctl(fd, USBDEVFS_REAPURB, &purb) < 0)
         return -3;
 
-    if (urb.usercontext != (void *) 0x1337)
+    if (purb->usercontext != (void *) 0x1337)
         return -4;
 
+    free(buffer);
     return 0;
 }

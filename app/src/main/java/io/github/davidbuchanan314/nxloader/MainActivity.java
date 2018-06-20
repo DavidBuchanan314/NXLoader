@@ -1,10 +1,5 @@
 package io.github.davidbuchanan314.nxloader;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Service;
@@ -14,14 +9,23 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.v4.view.*;
-import android.support.v4.app.*;
-import android.support.v7.app.AppCompatActivity;
-import android.support.design.widget.TabLayout;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
     private static final int READ_REQUEST_CODE = 42;
     private FragmentLogs logFragment;
     BroadcastReceiver myReceiver;
@@ -32,20 +36,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // http://www.gadgetsaint.com/android/create-viewpager-tabs-android/
-        ViewPager viewPager = findViewById(R.id.pager);
+        ViewPager viewPager = findViewById(R.id.main_pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         logFragment = new FragmentLogs();
-        adapter.addFragment(logFragment, "Logs");
-        adapter.addFragment(new FragmentConfig(), "Config");
-        adapter.addFragment(new FragmentAbout(), "About");
+        adapter.addFragment(logFragment, getString(R.string.logs_title));
+        adapter.addFragment(new FragmentConfig(), getString(R.string.config_title));
+        adapter.addFragment(new FragmentAbout(), getString(R.string.about_title));
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.main_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         myReceiver = new ReceiveMessages();
-        registerReceiver(myReceiver, new IntentFilter("io.github.davidbuchanan314.LOG_UPDATE"));
+        registerReceiver(myReceiver, new IntentFilter(Constants.LOGGER_ACTION));
     }
 
     @Override
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // primary payload selection button
-    public void primarySelect(View view) {
+    public void onConfigPrimaryPayloadClick(View view) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
@@ -63,18 +67,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // primary payload reset button
-    public void primaryReset(View view) {
-        SharedPreferences prefs = getSharedPreferences("config", MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+    public void onConfigRestoreClick(View view) {
+        SharedPreferences prefs = getSharedPreferences("config", Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(getString(R.string.preference_payload_name));
-        editor.commit();
+        editor.remove(Constants.PREFERENCES_KEY);
+        editor.apply();
+
         Logger.log(this, "[*] Payload reset to default (fusee.bin)");
     }
 
     // After payload selected
     @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent resultData) {
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK && resultData != null) {
             Uri uri = resultData.getData();
             try {
@@ -82,10 +86,10 @@ public class MainActivity extends AppCompatActivity {
                 Utils.copyFile(inputStream, new File(getFilesDir().getPath() + "/payload.bin"));
 
                 String file_name = Utils.getFileName(this, uri);
-                SharedPreferences prefs = getSharedPreferences("config", MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+                SharedPreferences prefs = getSharedPreferences("config", Context.MODE_MULTI_PROCESS);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(getString(R.string.preference_payload_name), file_name);
-                editor.commit();
+                editor.putString(Constants.PREFERENCES_KEY, file_name);
+                editor.apply();
 
                 Logger.log(this, "[*] New payload file selected: " + file_name);
             } catch (IOException e) {
@@ -96,14 +100,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     // Adapter for the viewpager using FragmentPagerAdapter
     // http://www.gadgetsaint.com/android/create-viewpager-tabs-android/
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
@@ -129,16 +132,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // https://stackoverflow.com/a/7276808/4454877
-    class ReceiveMessages extends BroadcastReceiver{
+    class ReceiveMessages extends BroadcastReceiver {
         @Override
-        public void onReceive(Context ctx, Intent intent) {
+        public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             String msg = bundle.getString("msg");
             logFragment.appendLog(msg);
 
             // switch to foreground
-            if (!(ctx instanceof MainActivity)) {
-                ActivityManager activityManager = (ActivityManager) ctx.getSystemService(Service.ACTIVITY_SERVICE);
+            if (!(context instanceof MainActivity)) {
+                ActivityManager activityManager = (ActivityManager) context.getSystemService(Service.ACTIVITY_SERVICE);
                 activityManager.moveTaskToFront(getTaskId(), 0);
             }
 

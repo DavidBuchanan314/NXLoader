@@ -13,7 +13,7 @@
     <string name="config_toast_new_payload">Payload nueva selecionada</string>
     <string name="config_toast_new_error">Error al aplicar la payload nueva</string>
     <string name="about_title">Acerca de</string>
-    <string name="about_category_description">"Descripción "</string>
+    <string name="about_category_description">Descripción</string>
     <string name="about_category_instructions">Instrucciones</string>
     <string name="about_category_links">Enlaces</string>
     <string name="about_instructions">"Conecta tu Switch en modo RCM para empezar "</string>

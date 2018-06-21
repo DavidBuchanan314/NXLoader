@@ -17,6 +17,12 @@
     <string name="config_toast_new_payload">New payload selected.</string>
     <string name="config_toast_new_error">Failed to set new payload.</string>
 
+    <!-- Strings for Permissions -->
+    <string name="permission_storage_dialog_title">Storage permission</string>
+    <string name="permission_storage_dialog_description">NXLoader need this permission to get payload files from your device\'s storage.</string>
+    <string name="permission_storage_button">Request</string>
+    <string name="permission_storage_error">Could not access the repository. Try to get permission again.</string>
+
     <!-- Strings for About -->
     <string name="about_title">About</string>
     <string name="about_category_description">Description</string>

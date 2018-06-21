@@ -1,5 +1,6 @@
 package io.github.davidbuchanan314.nxloader;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Service;
@@ -8,8 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,9 +28,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.davidbuchanan314.nxloader.utils.PermissionsUtils;
+import io.github.davidbuchanan314.nxloader.utils.Utils;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int READ_REQUEST_CODE = 42;
+
     private FragmentLogs logFragment;
     BroadcastReceiver myReceiver;
 
@@ -61,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
     // primary payload selection button
     public void onConfigPrimaryPayloadClick(View view) {
+        if (!PermissionsUtils.checkPermissionGranted(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            PermissionsUtils.showPermissionDialog(this);
+        } else {
+            getPayloadFromStorage();
+        }
+    }
+
+    private void getPayloadFromStorage() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
@@ -102,6 +117,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PermissionsUtils.PERMISSIONS_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getPayloadFromStorage();
+                } else {
+                    Toast.makeText(this, R.string.permission_storage_error, Toast.LENGTH_SHORT).show();
+                }
+        }
+    }
 
     // Adapter for the viewpager using FragmentPagerAdapter
     // http://www.gadgetsaint.com/android/create-viewpager-tabs-android/

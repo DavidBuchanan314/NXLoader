@@ -11,28 +11,33 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="io.github.davidbuchanan314.LOG_UPDATE" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".USBHandlerActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
             android:label="( ͡° ͜ʖ ͡°)"
             android:noHistory="true"
-            android:excludeFromRecents="true"
-            android:taskAffinity="com.example.taskAffinityUsbEventReceiver"
             android:process=":UsbEventReceiverActivityProcess"
-            android:exported="false"
+            android:taskAffinity="com.example.taskAffinityUsbEventReceiver"
             android:theme="@style/invisibleTheme">
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
             </intent-filter>
-            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
 

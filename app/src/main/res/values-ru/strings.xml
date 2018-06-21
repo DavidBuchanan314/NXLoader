@@ -11,6 +11,9 @@
     <string name="config_primary_payload_button">Выбрать собственный загрузчик</string>
     <string name="config_restore_description">Восстановить загрузчик по умолчанию на ваш Switch - \"fusee.bin\"</string>
     <string name="config_restore_button">Сбросить настройки</string>
+    <string name="config_toast_restored">Восстановлен загрузчик по умолчанию.</string>
+    <string name="config_toast_new_payload">Новый загрузчик выбран.</string>
+    <string name="config_toast_new_error">Ошибка при выборе нового загрузчика.</string>
 
     <!-- Strings for About -->
     <string name="about_title">О программе</string>

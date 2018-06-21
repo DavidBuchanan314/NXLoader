@@ -11,6 +11,9 @@
     <string name="config_primary_payload_button">Обрати власний завантажувач</string>
     <string name="config_restore_description">Відновити завантажувач за замовчуванням на ваш Switch - \"fusee.bin\"</string>
     <string name="config_restore_button">Скинути налаштування</string>
+    <string name="config_toast_restored">Відновлено завантажувач за замовчуванням.</string>
+    <string name="config_toast_new_payload">Обрано новий завантажувач.</string>
+    <string name="config_toast_new_error">Помилка при виборі нового завантажувача.</string>
 
     <!-- Strings for About -->
     <string name="about_title">Про програму</string>

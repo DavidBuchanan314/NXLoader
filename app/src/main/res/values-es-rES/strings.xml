@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="logs_title">Informe</string>
+    <string name="logs_category_actions">Lista de acciones</string>
+    <string name="config_title">Ajustes</string>
+    <string name="config_category_primary_payload">Payload primaria</string>
+    <string name="config_category_restore">Restaurar predeterminado</string>
+    <string name="config_primary_payload_description">"Puedes usar tu payload descargada previamente "</string>
+    <string name="config_primary_payload_button">Seleccionar payload primaria</string>
+    <string name="config_restore_description">Restaurar payload predeterminada - fusee.bin</string>
+    <string name="config_restore_button">Restaurar predeterminado</string>
+    <string name="config_toast_restored">Payload predeterminada restaurada</string>
+    <string name="config_toast_new_payload">Payload nueva selecionada</string>
+    <string name="config_toast_new_error">Error al aplicar la payload nueva</string>
+    <string name="about_title">Acerca de</string>
+    <string name="about_category_description">"Descripción "</string>
+    <string name="about_category_instructions">Instruciones</string>
+    <string name="about_category_links">Enlaces</string>
+    <string name="about_instructions">"Conecta tu Switch en modo RCM para empezar "</string>
+    <string name="about_link_github">Proyecto en GitHub</string>
+    <string name="about_link_twitter">Twitter del desarrollador</string>
+    <string name="about_description">NXLoader es una implemetación de la vulnerabilidad Tegra X1 \"bootrom\". Está basado en el exploit \"Fusée Gelée\" por ktemkin y el exploit \"ShofEL2\" por fail0verflow.</string>
+</resources>

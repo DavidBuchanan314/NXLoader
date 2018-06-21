@@ -15,6 +15,12 @@
     <string name="config_toast_new_payload">Обрано новий завантажувач.</string>
     <string name="config_toast_new_error">Помилка при виборі нового завантажувача.</string>
 
+    <!-- Strings for Permissions -->
+    <string name="permission_storage_dialog_title">Доступ до пам\'яті</string>
+    <string name="permission_storage_dialog_description">NXLoader потребує цього дозволу для отримання файлів завантажувача з пам\'яті вашого пристрою.</string>
+    <string name="permission_storage_button">Запросити</string>
+    <string name="permission_storage_error">Не вдається отримати доступ до сховища. Спробуйте знову запросити дозвіл.</string>
+
     <!-- Strings for About -->
     <string name="about_title">Про програму</string>
     <string name="about_category_description">Опис</string>

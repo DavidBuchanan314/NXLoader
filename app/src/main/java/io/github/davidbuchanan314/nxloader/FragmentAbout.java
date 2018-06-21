@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import io.github.davidbuchanan314.nxloader.utils.Utils;
+
 public class FragmentAbout extends Fragment {
     public FragmentAbout() {
         // Required empty public constructor

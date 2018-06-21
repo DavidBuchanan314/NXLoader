@@ -15,6 +15,12 @@
     <string name="config_toast_new_payload">Новый загрузчик выбран.</string>
     <string name="config_toast_new_error">Ошибка при выборе нового загрузчика.</string>
 
+    <!-- Strings for Permissions -->
+    <string name="permission_storage_dialog_title">Доступ к хранилищу</string>
+    <string name="permission_storage_dialog_description">NXLoader нуждается в этом разрешении для получения файлов загрузчика с хранилища вашего устройства.</string>
+    <string name="permission_storage_button">Запросить</string>
+    <string name="permission_storage_error">Не удалось получить доступ к хранилищу. Попробуйте снова запросить разрешение.</string>
+
     <!-- Strings for About -->
     <string name="about_title">О программе</string>
     <string name="about_category_description">Описание</string>

@@ -18,6 +18,8 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import io.github.davidbuchanan314.nxloader.utils.Utils;
+
 public class PrimaryLoader implements USBDevHandler {
     private static final int RCM_PAYLOAD_ADDR = 0x40010000;
     private static final int INTERMEZZO_LOCATION = 0x4001F000;

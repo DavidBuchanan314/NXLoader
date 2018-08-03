@@ -8,8 +8,8 @@
     <string name="config_category_primary_payload">Payload principal</string>
     <string name="config_category_restore">Restaurer par défaut</string>
     <string name="config_primary_payload_description">Vous pouvez utiliser votre payload, préalablement téléchargé.</string>
-    <string name="config_primary_payload_button">Selectionnez le payload principal</string>
-    <string name="config_restore_description">Restaure le payload par default sur votre Switch - \"fusee.bin\"</string>
+    <string name="config_primary_payload_button">Sélectionnez le payload principal</string>
+    <string name="config_restore_description">Restaure le payload par defaut sur votre Switch - \"fusee.bin\"</string>
     <string name="config_restore_button">Restaurer par défaut</string>
     <string name="config_toast_restored">Payload par défaut restauré.</string>
     <string name="config_toast_new_payload">Nouveau payload sélectionné.</string>

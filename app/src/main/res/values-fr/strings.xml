@@ -13,15 +13,15 @@
     <string name="config_restore_button">Restaurer par défaut</string>
     <string name="config_toast_restored">Payload par défaut restauré.</string>
     <string name="config_toast_new_payload">Nouveau payload séléctionné.</string>
-    <string name="config_toast_new_error">Echec de la sélection de nouveau payload.</string>
+    <string name="config_toast_new_error">Echec de la sélection du nouveau payload.</string>
 
     <!-- Strings for About -->
     <string name="about_title">A propos</string>
     <string name="about_category_description">Description</string>
     <string name="about_category_instructions">Instructions</string>
     <string name="about_category_links">Liens</string>
-    <string name="about_description">NXLoader est une exploitation de la faille \"bootrom\" de la Tegra X1. Elle est basée sur l\'exploit \"Fusée Gelée\" par ktemkin ainsi que sur l'exploit \"ShofEL2\" par fail0verflow.</string>
-    <string name="about_instructions">Connectez votre Switch et mettez la en mode RCM afin de commencer a charger.</string>
+    <string name="about_description">NXLoader est une exploitation de la faille \"bootrom\" de la Tegra X1. Elle est basée sur l\'exploit \"Fusée Gelée\" de ktemkin ainsi que sur l'exploit \"ShofEL2\" de fail0verflow.</string>
+    <string name="about_instructions">Connectez votre Switch et mettez la en mode RCM afin de commencer à charger.</string>
     <string name="about_link_github">Projet sur GitHub</string>
     <string name="about_link_twitter">Twitter des développeurs</string>
 </resources>

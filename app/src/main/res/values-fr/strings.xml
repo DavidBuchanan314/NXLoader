@@ -12,7 +12,7 @@
     <string name="config_restore_description">Restaure le payload par default sur votre Switch - \"fusee.bin\"</string>
     <string name="config_restore_button">Restaurer par défaut</string>
     <string name="config_toast_restored">Payload par défaut restauré.</string>
-    <string name="config_toast_new_payload">Nouveau payload séléctionné.</string>
+    <string name="config_toast_new_payload">Nouveau payload sélectionné.</string>
     <string name="config_toast_new_error">Echec de la sélection du nouveau payload.</string>
 
     <!-- Strings for About -->

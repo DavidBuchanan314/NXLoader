@@ -1,0 +1,27 @@
+<resources>
+    <!-- Strings for Logs -->
+    <string name="logs_title">Historique</string>
+    <string name="logs_category_actions">Liste d\'actions</string>
+
+    <!-- Strings for Config -->
+    <string name="config_title">Configuration</string>
+    <string name="config_category_primary_payload">Payload principal</string>
+    <string name="config_category_restore">Restaurer par défaut</string>
+    <string name="config_primary_payload_description">Vous pouvez utiliser votre payload, préalablement téléchargé.</string>
+    <string name="config_primary_payload_button">Selectionnez le payload principal</string>
+    <string name="config_restore_description">Restaure le payload par default sur votre Switch - \"fusee.bin\"</string>
+    <string name="config_restore_button">Restaurer par défaut</string>
+    <string name="config_toast_restored">Payload par défaut restauré.</string>
+    <string name="config_toast_new_payload">Nouveau payload séléctionné.</string>
+    <string name="config_toast_new_error">Echec de la sélection de nouveau payload.</string>
+
+    <!-- Strings for About -->
+    <string name="about_title">A propos</string>
+    <string name="about_category_description">Description</string>
+    <string name="about_category_instructions">Instructions</string>
+    <string name="about_category_links">Liens</string>
+    <string name="about_description">NXLoader est une exploitation de la faille \"bootrom\" de la Tegra X1. Elle est basée sur l\'exploit \"Fusée Gelée\" par ktemkin ainsi que sur l'exploit \"ShofEL2\" par fail0verflow.</string>
+    <string name="about_instructions">Connectez votre Switch et mettez la en mode RCM afin de commencer a charger.</string>
+    <string name="about_link_github">Projet sur GitHub</string>
+    <string name="about_link_twitter">Twitter des développeurs</string>
+</resources>

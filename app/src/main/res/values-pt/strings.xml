@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name" translatable="false">NXLoader</string>
+
+    <!-- Strings for Logs -->
+    <string name="logs_title">Logs</string>
+    <string name="logs_category_actions">Lista de Ações</string>
+
+    <!-- Strings for Config -->
+    <string name="config_title">Config</string>
+    <string name="config_category_primary_payload">Payload principal</string>
+    <string name="config_category_restore">Restaurar padrão</string>
+    <string name="config_primary_payload_description">Você pode usar seu payload previamente baixado.</string>
+    <string name="config_primary_payload_button">Selecione o payload principal</string>
+    <string name="config_restore_description">Restaura o payload padrão para seu Switch - \"fusee.bin\"</string>
+    <string name="config_restore_button">Restaurar padrão</string>
+    <string name="config_toast_restored">Payload padrão restaurado.</string>
+    <string name="config_toast_new_payload">Novo payload selecionado.</string>
+    <string name="config_toast_new_error">Falha ao definir novo payload.</string>
+
+    <!-- Strings for About -->
+    <string name="about_title">Sobre</string>
+    <string name="about_category_description">Descrição</string>
+    <string name="about_category_instructions">Instruções</string>
+    <string name="about_category_links">Links</string>
+    <string name="about_description">O NXLoader é uma implementação da exploração para a vulnerabilidade do Tegra X1 \ "bootrom \". Baseia-se no exploit \ "Fusée Gelée \" do ktemkin e no \ "ShofEL2 \" explorado pelo fail0verflow.</string>
+    <string name="about_instructions">Ligue o seu Switch em modo RCM e conecte-o para começar</string>
+    <string name="about_link_github">Projeto no GitHub</string>
+    <string name="about_link_twitter">Twitter do Desenvolvedor</string>
+</resources>
